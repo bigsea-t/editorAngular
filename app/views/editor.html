@@ -1,0 +1,31 @@
+    <div class="main" ng-click="hideTooltip()">
+      <div class="editor" ng-repeat="item in $storage.draft">
+        <div class = "row">
+          <!-- This is the tooltip. It is shown only when the showtooltip variable is truthful -->
+          <div class="" ng-click="$event.stopPropagation()" ng-show="item.show">
+
+            <!-- ng-model binds the contents of the text field with the "value" model.
+               Any changes to the text field will automatically update the value, and
+               all other bindings on the page that depend on it.  -->
+            <form>
+              <input type="radio" ng-model="item.tag" value="p">paragraph</input>
+              <input type="radio" ng-model="item.tag" value="h1">title</input>
+              <input type="radio" ng-model="item.tag" value="h2">heading</input>
+            </form>
+            <input type="text" ng-model="item.value"/>
+          </div>
+
+          <!-- Call a method defined in the InlineEditorController that toggles
+           the showtooltip varaible -->
+          <div ng-bind-html="item.html()" ng-click="toggleTooltip($event)"></div>
+          <button ng-click = "item.append()">more</button>
+        </div>
+      </div>
+
+
+<!--       <h1>test</h1>
+      <div ng-repeat="cmp in test">
+        <div ng-bind-html="cmp.html"></div>
+      </div>
+ -->
+    </div>
