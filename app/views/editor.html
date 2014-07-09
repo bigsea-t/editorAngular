@@ -1,31 +1,120 @@
-    <div class="main" ng-click="hideTooltip()">
-      <div class="editor" ng-repeat="item in $storage.draft">
-        <div class = "row">
-          <!-- This is the tooltip. It is shown only when the showtooltip variable is truthful -->
-          <div class="" ng-click="$event.stopPropagation()" ng-show="item.show">
+<div class = "main">
 
-            <!-- ng-model binds the contents of the text field with the "value" model.
-               Any changes to the text field will automatically update the value, and
-               all other bindings on the page that depend on it.  -->
-            <form>
-              <input type="radio" ng-model="item.tag" value="p">paragraph</input>
-              <input type="radio" ng-model="item.tag" value="h1">title</input>
-              <input type="radio" ng-model="item.tag" value="h2">heading</input>
-            </form>
-            <input type="text" ng-model="item.value"/>
+  <div class = "editor">
+
+    <div class = "info section">
+
+      <form class="form-horizontal" role="form">
+
+        <!-- title -->
+        <div class="form-group">
+          <label for="inputTitle" class="col-sm-2 control-label">Title:</label>
+          <div class="col-sm-10">
+            <input ng-model = "$storage.article.title" type="text"
+                    class="form-control" id="inputTitle" placeholder="">
           </div>
-
-          <!-- Call a method defined in the InlineEditorController that toggles
-           the showtooltip varaible -->
-          <div ng-bind-html="item.html()" ng-click="toggleTooltip($event)"></div>
-          <button ng-click = "item.append()">more</button>
         </div>
-      </div>
 
-
-<!--       <h1>test</h1>
-      <div ng-repeat="cmp in test">
-        <div ng-bind-html="cmp.html"></div>
-      </div>
- -->
+        <!-- city -->
+        <div class="form-group">
+          <label for="selectCity" class="col-sm-2 control-label">City:</label>
+          <div class="col-sm-10">
+            <select class="form-control" id="selectCity" ng-model="$storage.article.city"
+                    ng-options=" city for city in cities"></select>
+          </div>
+        </div>
+      </form>
     </div>
+
+    <!-- content-->
+    <div class = "contents section">
+      <h1>{{$storage.article.title}}</h1>
+      <h3>city:{{$storage.article.city}}</h3>
+      <div class = "repeating block" ng-repeat="item in $storage.article.contents">
+          <div ng-bind-html="format.{{item.type}}(item)"></div>
+      </div>
+    </div>
+
+    <!-- editor tools -->
+    <div class = "tool section">
+      <tabset justified="false">
+
+      <!-- heading -->
+        <tab heading = "Heading">
+        <br/>
+          <form class="form-horizontal" role="form">
+            <div class="form-group">
+              <label for="inputUrl" class="col-sm-2 control-label">HEADING:</label>
+              <div class="col-sm-10">
+                <input ng-model = "$storage.tools.heading.text" type="text"
+                        class="form-control" id="inputLinkUrl" placeholder="">
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="col-sm-offset-2 col-sm-10">
+                <button ng-click = "$storage.article.contents.push(clone($storage.tools.heading));$storage.tools.heading.text=''" type="submit" class="btn btn-default">OK</button>
+              </div>
+            </div>
+          </form>
+        </tab>
+
+      <!-- paragraph -->
+        <tab heading = "Paragraph">
+        <br/>
+          <form class="form-horizontal" role="form">
+            <div class="form-group">
+              <label for="inputParagraphText" class="col-sm-2 control-label">PARAGRAPH:</label>
+              <div class="col-sm-10">
+                <textarea rows = "10" ng-model = "$storage.tools.paragraph.text" type="text"
+                        class="form-control" id="inputParagraphText" placeholder="">
+                </textarea>
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="col-sm-offset-2 col-sm-10">
+                <button ng-click = "$storage.article.contents.push(clone($storage.tools.paragraph));$storage.tools.paragraph.text=''"type="submit" class="btn btn-default">OK</button>
+              </div>
+            </div>
+          </form>
+        </tab>
+
+      <!-- link -->
+        <tab heading = "link">
+        <br/>
+          <form class="form-horizontal" role="form">
+            <div class="form-group">
+              <label for="inputUrl" class="col-sm-2 control-label">URL:</label>
+              <div class="col-sm-10">
+                <input ng-model = "$storage.tools.link.url" type="text"
+                        class="form-control" id="inputLinkUrl" placeholder="">
+              </div>
+            </div>
+            <div class = "form-group">
+              <label for="inputUrl" class="col-sm-2 control-label">TEXT:</label>
+              <div class="col-sm-10">
+                <input ng-model = "$storage.tools.link.text" type= "text"
+                        class="form-control" id="inputLinkText" placeholder="">
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="col-sm-offset-2 col-sm-10">
+                <button ng-click = "$storage.article.contents.push(clone($storage.tools.link));$storage.tools.link.text='';"
+                 type="submit" class="btn btn-default">OK</button>
+              </div>
+            </div>
+          </form>
+        </tab>
+
+    </div>
+
+  <pre>
+  article: <br/> {{$storage.article}}
+  <br/>
+  tools: <br/> {{$storage.tools}}
+  </pre>
+
+  </div>
+</div>
+
+
+
