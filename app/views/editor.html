@@ -1,4 +1,4 @@
-<div class = "main">
+    <div class = "main">
 
   <div class = "editor">
 
@@ -29,18 +29,24 @@
     <!-- content-->
     <div class = "contents section">
       <h1>{{$storage.article.title}}</h1>
-      <h3>city:{{$storage.article.city}}</h3>
+      <h6>city:{{$storage.article.city}}</h6>
       <div class = "repeating block" ng-repeat="item in $storage.article.contents">
-          <div ng-bind-html="format.{{item.type}}(item)"></div>
+          <div ng-bind-html="format.auto(item)"></div>
       </div>
+    </div>
+
+    <!-- editing content-->
+    <div class = "editing content section">
+      <div ng-bind-html = "format.auto($storage.editing.block)"></div>
+      <div ng-bind-html = "format.auto($storage.editing.inline)"></div>
     </div>
 
     <!-- editor tools -->
     <div class = "tool section">
-      <tabset justified="false">
+      <tabset justified = "false">
 
       <!-- heading -->
-        <tab heading = "Heading">
+        <tab heading = "Heading" ng-click = "$storage.editing.block = $storage.tools.heading">
         <br/>
           <form class="form-horizontal" role="form">
             <div class="form-group">
@@ -59,7 +65,7 @@
         </tab>
 
       <!-- paragraph -->
-        <tab heading = "Paragraph">
+        <tab heading = "Paragraph" ng-click = "$storage.editing.block = $storage.tools.paragraph">
         <br/>
           <form class="form-horizontal" role="form">
             <div class="form-group">
@@ -79,7 +85,7 @@
         </tab>
 
       <!-- link -->
-        <tab heading = "link">
+<!--         <tab heading = "link" ng-click = "$storage.editing.inline = $storage.tools.link">
         <br/>
           <form class="form-horizontal" role="form">
             <div class="form-group">
@@ -98,12 +104,12 @@
             </div>
             <div class="form-group">
               <div class="col-sm-offset-2 col-sm-10">
-                <button ng-click = "$storage.article.contents.push(clone($storage.tools.link));$storage.tools.link.text='';"
+                <button ng-click = "$storage.editing.block.text = format.auto($storage.tools.link);$storage.tools.link.text='';$storage.tools.link.url='';"
                  type="submit" class="btn btn-default">OK</button>
               </div>
             </div>
           </form>
-        </tab>
+        </tab> -->
 
     </div>
 
@@ -111,7 +117,11 @@
   article: <br/> {{$storage.article}}
   <br/>
   tools: <br/> {{$storage.tools}}
+  <br/>
+  editing: <br/> {{$storage.editing}}
   </pre>
+
+  <pre>{{format.auto($storage.editing.inline)}}</pre>
 
   </div>
 </div>

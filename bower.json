@@ -2,6 +2,7 @@
   "name": "editor-angular",
   "version": "0.0.0",
   "dependencies": {
+    "ng-file-upload-shim": "~1.5.0",
     "angular": "1.2.16",
     "json3": "~3.3.1",
     "es5-shim": "~3.1.0",
@@ -15,7 +16,8 @@
     "angular-route": "1.2.16",
     "ngstorage": "~0.3.0",
     "angular-bootstrap": "~0.11.0",
-    "bootstrap": "~3.2.0"
+    "bootstrap": "~3.2.0",
+    "ng-file-upload": "~1.5.0"
   },
   "devDependencies": {
     "angular-mocks": "1.2.16",

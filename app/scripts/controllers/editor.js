@@ -34,6 +34,12 @@ angular.module('editorAngularApp')
       };
     };
 
+    if(! $scope.$storage.editing){
+      $scope.$storage.editing = {
+        block:$scope.$storage.tools.heading,
+        inline:{}
+      }
+    };
 
     // var itemFuncs = {
     //   index:function(item){
@@ -56,8 +62,14 @@ angular.module('editorAngularApp')
     // };
 
     $scope.format = {
+      auto:function(item){
+        if (!item.text) {
+          return;
+        };
+        return this[item.type](item);
+      },
       link: function(link){
-        var html = '<a href = ' + link.url+ '>' + link.text +'</a>';
+        var html = '<a href = "' + link.url+ '">' + link.text +'</a>';
         return html;
       },
       heading: function(heading){
@@ -111,13 +123,14 @@ angular.module('editorAngularApp')
     $scope.tags = tags;
     $scope.cities = cities;
 
+
     // if(! $scope.$storage.draft){
     //   $scope.$storage.draft=[];
     //   $scope.$storage.draft[0]=newItem();
     // }
 
     //whole article draft
-    var draft=$scope.$storage.draft;
+    // var draft=$scope.$storage.draft;
 
 
     // $scope.itemFuncs=itemFuncs;
@@ -125,7 +138,7 @@ angular.module('editorAngularApp')
 
 
     // merge obj2 to obj1 -- the same attr is overwittern by obj2
-    function merge(obj1, obj2) {
+    var merge = function (obj1, obj2) {
       var obj3 = {};
       for (var attrname in obj1) { obj3[attrname] = obj1[attrname]; }
       for (var attrname in obj2) { obj3[attrname] = obj2[attrname]; }
